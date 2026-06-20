@@ -276,27 +276,27 @@ KELOMPOK 4
 
     st.markdown("---")
 
-    c1, c2, c3, c4 = st.columns(4)
+        c1, c2, c3, c4 = st.columns(4)
 
-   c1.metric(
-    label="🌳 Profil Hutan",
-    value=len(profil_hutan)
-)
+    c1.metric(
+        label="🌳 Profil Hutan",
+        value=len(profil_hutan)
+    )
 
-c2.metric(
-    label="🪵 Produksi",
-    value=len(produksi_kayu)
-)
+    c2.metric(
+        label="🪵 Produksi",
+        value=len(produksi_kayu)
+    )
 
-c3.metric(
-    label="📊 Master Data",
-    value=len(master_data)
-)
+    c3.metric(
+        label="📊 Master Data",
+        value=len(master_data)
+    )
 
-c4.metric(
-    label="📈 Dashboard",
-    value=len(dashboard)
-)
+    c4.metric(
+        label="📈 Dashboard",
+        value=len(dashboard)
+    )
 
     st.markdown("---")
 
