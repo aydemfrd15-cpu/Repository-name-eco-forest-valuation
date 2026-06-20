@@ -359,12 +359,12 @@ elif menu == "Profil Hutan":
         "Grafik Profil Hutan"
     )
 
-st.info("""
+    st.info("""
 Profil hutan menggambarkan karakteristik utama KPH Cepu sebagai kawasan hutan produksi jati.
 Data menunjukkan luas kawasan, jenis hutan, produksi kayu, serta estimasi nilai ekonomi hutan berdasarkan harga kayu jati dan volume produksi.
 Informasi ini menjadi dasar dalam analisis valuasi ekonomi sumber daya hutan.
 """)
-
+    
 # =====================================================
 # PRODUKSI KAYU
 # =====================================================
@@ -376,11 +376,11 @@ elif menu == "Produksi Kayu":
     )
 
     st.dataframe(
-    produksi_kayu,
-    use_container_width=True,
-    hide_index=True,
-    height=table_height(produksi_kayu)
-)
+        produksi_kayu,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(produksi_kayu)
+    )
 
     create_chart_from_table(
         produksi_kayu,
@@ -389,7 +389,7 @@ elif menu == "Produksi Kayu":
         "Grafik Produksi Kayu"
     )
 
-st.info("""
+    st.info("""
 Data produksi kayu menunjukkan parameter yang digunakan untuk menilai manfaat ekonomi langsung dari hutan.
 Variabel seperti stok karbon, harga karbon, konservasi tanah, dan indeks keanekaragaman hayati digunakan sebagai dasar estimasi jasa ekosistem dan nilai ekonomi lingkungan.
 """)
@@ -409,11 +409,11 @@ elif menu == "Master Data":
     )
 
     st.dataframe(
-    master_data,
-    use_container_width=True,
-    hide_index=True,
-    height=table_height(master_data)
-)
+        master_data,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(master_data)
+    )
 
     create_chart_from_table(
         master_data,
@@ -422,7 +422,7 @@ elif menu == "Master Data":
         "Grafik Master Data"
     )
 
-st.info("""
+    st.info("""
 Master data merupakan basis seluruh perhitungan dalam aplikasi.
 Data ini mengintegrasikan informasi produksi kayu, nilai bruto hutan, margin usaha, jasa karbon, serta skenario pemanfaatan lahan yang digunakan dalam simulasi valuasi ekonomi.
 """)
@@ -438,11 +438,11 @@ elif menu == "Parameter Simulasi":
     )
 
     st.dataframe(
-    parameter,
-    use_container_width=True,
-    hide_index=True,
-    height=table_height(parameter)
-)
+        parameter,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(parameter)
+    )
 
     create_chart_from_table(
         parameter,
@@ -451,7 +451,7 @@ elif menu == "Parameter Simulasi":
         "Grafik Parameter Simulasi"
     )
 
-st.info("""
+    st.info("""
 Parameter simulasi berisi asumsi dasar yang digunakan dalam proses perhitungan.
 Perubahan nilai pada parameter ini akan mempengaruhi hasil valuasi ekonomi hutan, jasa ekosistem karbon, dan analisis trade-off pemanfaatan lahan.
 """)
@@ -467,11 +467,11 @@ elif menu == "Dashboard Summary":
     )
 
     st.dataframe(
-    dashboard,
-    use_container_width=True,
-    hide_index=True,
-    height=table_height(dashboard)
-)
+        dashboard,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(dashboard)
+    )
 
     create_chart_from_table(
         dashboard,
@@ -480,6 +480,8 @@ elif menu == "Dashboard Summary":
         "Trade-Off Analysis"
     )
 
-    st.success(
-        "Dashboard menampilkan ringkasan valuasi ekonomi hutan, jasa ekosistem, dan trade-off pemanfaatan sumber daya pada kawasan KPH Cepu."
-    )
+    st.success("""
+Dashboard Summary menyajikan hasil akhir analisis valuasi ekonomi hutan KPH Cepu.
+Perbandingan antara nilai ekonomi hutan dan skenario konversi lahan menunjukkan adanya trade-off pemanfaatan sumber daya.
+Hasil ini dapat digunakan sebagai bahan pertimbangan dalam pengambilan keputusan pengelolaan hutan yang berkelanjutan.
+""")
