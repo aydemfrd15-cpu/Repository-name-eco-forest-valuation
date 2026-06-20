@@ -335,18 +335,16 @@ elif menu == "Profil Hutan":
     )
 
     st.dataframe(
-        profil_hutan,
-        use_container_width=True,
-        hide_index=True,
-        height=420
-    )
+    dashboard,
+    use_container_width=True,
+    hide_index=True
+)
 
-    create_chart_from_table(
-        profil_hutan,
-        "Variable",
-        "Value",
-        "Grafik Profil Hutan"
-    )
+    st.dataframe(
+    profil_hutan,
+    use_container_width=True,
+    hide_index=True
+)
 
 # =====================================================
 # PRODUKSI KAYU
@@ -359,11 +357,10 @@ elif menu == "Produksi Kayu":
     )
 
     st.dataframe(
-        produksi_kayu,
-        use_container_width=True,
-        hide_index=True,
-        height=420
-    )
+    produksi_kayu,
+    use_container_width=True,
+    hide_index=True
+)
 
     create_chart_from_table(
         produksi_kayu,
@@ -387,11 +384,10 @@ elif menu == "Master Data":
     )
 
     st.dataframe(
-        master_data,
-        use_container_width=True,
-        hide_index=True,
-        height=420
-    )
+    master_data,
+    use_container_width=True,
+    hide_index=True
+)
 
     create_chart_from_table(
         master_data,
@@ -411,11 +407,11 @@ elif menu == "Parameter Simulasi":
     )
 
     st.dataframe(
-        parameter,
-        use_container_width=True,
-        hide_index=True,
-        height=420
-    )
+    parameter,
+    use_container_width=True,
+    hide_index=True
+    height=table_height(parameter)
+)
 
     create_chart_from_table(
         parameter,
@@ -435,11 +431,11 @@ elif menu == "Dashboard Summary":
     )
 
     st.dataframe(
-        dashboard,
-        use_container_width=True,
-        hide_index=True,
-        height=420
-    )
+    dashboard,
+    use_container_width=True,
+    hide_index=True
+    height=table_height(dashboard)
+)
 
     create_chart_from_table(
         dashboard,
