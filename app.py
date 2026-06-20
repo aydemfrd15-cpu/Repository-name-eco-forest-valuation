@@ -149,6 +149,17 @@ def extract_number(value):
 
     return None
 
+
+def table_height(df):
+
+    return min(
+        600,
+        max(
+            180,
+            (len(df) + 1) * 35
+        )
+    )
+
 # =====================================================
 # GRAFIK PROFESIONAL
 # =====================================================
@@ -335,9 +346,10 @@ elif menu == "Profil Hutan":
     )
 
     st.dataframe(
-    dashboard,
+    profil_hutan,
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
+    height=table_height(profil_hutan)
 )
 
     st.dataframe(
@@ -359,7 +371,8 @@ elif menu == "Produksi Kayu":
     st.dataframe(
     produksi_kayu,
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
+    height=table_height(produksi_kayu)
 )
 
     create_chart_from_table(
@@ -386,7 +399,8 @@ elif menu == "Master Data":
     st.dataframe(
     master_data,
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
+    height=table_height(master_data)
 )
 
     create_chart_from_table(
@@ -409,7 +423,7 @@ elif menu == "Parameter Simulasi":
     st.dataframe(
     parameter,
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
     height=table_height(parameter)
 )
 
@@ -433,7 +447,7 @@ elif menu == "Dashboard Summary":
     st.dataframe(
     dashboard,
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
     height=table_height(dashboard)
 )
 
