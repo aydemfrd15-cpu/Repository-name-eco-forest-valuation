@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import plotly.express as px
 import re
 
 # =====================================================
@@ -14,42 +15,104 @@ st.set_page_config(
 )
 
 # =====================================================
+# CUSTOM CSS
+# =====================================================
+
+st.markdown("""
+<style>
+
+.block-container{
+    padding-top:2rem;
+}
+
+[data-testid="stMetric"]{
+    background:#eef7f0;
+    border:1px solid #d6ead8;
+    border-radius:15px;
+    padding:15px;
+}
+
+h1{
+    color:#1B5E20;
+    font-weight:700;
+}
+
+h2,h3{
+    color:#2E7D32;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =====================================================
 # LOAD LOGO
 # =====================================================
 
 logo = Image.open("Logo Unisbaa.png")
 
 # =====================================================
+# CLEAN DATAFRAME
+# =====================================================
+
+def clean_dataframe(df):
+
+    df = df.loc[
+        :,
+        ~df.columns.astype(str).str.contains("^Unnamed")
+    ]
+
+    df = df.dropna(how="all")
+
+    df.columns = [
+        str(col)
+        .replace("_", " ")
+        .title()
+        for col in df.columns
+    ]
+
+    return df
+
+# =====================================================
 # LOAD EXCEL
 # =====================================================
 
-profil_hutan = pd.read_excel(
-    "df_forest_profile.xlsx",
-    header=4
+profil_hutan = clean_dataframe(
+    pd.read_excel(
+        "df_forest_profile.xlsx",
+        header=4
+    )
 )
 
-produksi_kayu = pd.read_excel(
-    "df_wood_production.xlsx",
-    header=3
+produksi_kayu = clean_dataframe(
+    pd.read_excel(
+        "df_wood_production.xlsx",
+        header=3
+    )
 )
 
-master_data = pd.read_excel(
-    "df_master_data.xlsx",
-    header=3
+master_data = clean_dataframe(
+    pd.read_excel(
+        "df_master_data.xlsx",
+        header=3
+    )
 )
 
-parameter = pd.read_excel(
-    "df_simulation_params.xlsx",
-    header=3
+parameter = clean_dataframe(
+    pd.read_excel(
+        "df_simulation_params.xlsx",
+        header=3
+    )
 )
 
-dashboard = pd.read_excel(
-    "df_dashboard_summary.xlsx",
-    header=3
+dashboard = clean_dataframe(
+    pd.read_excel(
+        "df_dashboard_summary.xlsx",
+        header=3
+    )
 )
 
 # =====================================================
-# FUNGSI EKSTRAK ANGKA
+# EKSTRAK ANGKA
 # =====================================================
 
 def extract_number(value):
@@ -69,19 +132,26 @@ def extract_number(value):
 
     return None
 
-
 # =====================================================
-# FUNGSI GRAFIK
+# GRAFIK PROFESIONAL
 # =====================================================
 
-def create_chart_from_table(df, label_col, value_col, title):
+def create_chart_from_table(
+    df,
+    label_col,
+    value_col,
+    title
+):
 
     try:
 
-        chart_df = df[[label_col, value_col]].copy()
+        chart_df = df[
+            [label_col, value_col]
+        ].copy()
 
-        chart_df[value_col] = chart_df[value_col].apply(
-            extract_number
+        chart_df[value_col] = (
+            chart_df[value_col]
+            .apply(extract_number)
         )
 
         chart_df = chart_df.dropna()
@@ -90,13 +160,31 @@ def create_chart_from_table(df, label_col, value_col, title):
 
             st.subheader(title)
 
-            st.bar_chart(
-                chart_df.set_index(label_col)
+            fig = px.bar(
+                chart_df,
+                x=label_col,
+                y=value_col,
+                color=value_col,
+                text=value_col
+            )
+
+            fig.update_layout(
+                height=500,
+                showlegend=False,
+                xaxis_title="",
+                yaxis_title="",
+                template="plotly_white"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
             )
 
     except:
-        st.info("Data grafik tidak tersedia.")
-
+        st.info(
+            "Data grafik tidak tersedia."
+        )
 
 # =====================================================
 # SIDEBAR
@@ -107,7 +195,9 @@ st.sidebar.image(
     use_container_width=True
 )
 
-st.sidebar.markdown("## Eco-Forest Valuation")
+st.sidebar.markdown(
+    "## Eco-Forest Valuation"
+)
 
 menu = st.sidebar.radio(
     "Navigasi",
@@ -160,22 +250,22 @@ KELOMPOK 4
     c1, c2, c3, c4 = st.columns(4)
 
     c1.metric(
-        "Dataset Profil Hutan",
+        "🌳 Profil Hutan",
         len(profil_hutan)
     )
 
     c2.metric(
-        "Dataset Produksi",
+        "🪵 Produksi",
         len(produksi_kayu)
     )
 
     c3.metric(
-        "Master Data",
+        "📊 Master Data",
         len(master_data)
     )
 
     c4.metric(
-        "Dashboard",
+        "📈 Dashboard",
         len(dashboard)
     )
 
@@ -211,18 +301,21 @@ Fitur utama:
 
 elif menu == "Profil Hutan":
 
-    st.title("🌳 Profil Hutan KPH Cepu")
+    st.title(
+        "🌳 Profil Hutan KPH Cepu"
+    )
 
     st.dataframe(
         profil_hutan,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=420
     )
 
     create_chart_from_table(
         profil_hutan,
-        "variable",
-        "value",
+        "Variable",
+        "Value",
         "Grafik Profil Hutan"
     )
 
@@ -232,18 +325,21 @@ elif menu == "Profil Hutan":
 
 elif menu == "Produksi Kayu":
 
-    st.title("🪵 Produksi Kayu")
+    st.title(
+        "🪵 Produksi Kayu"
+    )
 
     st.dataframe(
         produksi_kayu,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=420
     )
 
     create_chart_from_table(
         produksi_kayu,
         "Variabel",
-        "nilai",
+        "Nilai",
         "Grafik Produksi Kayu"
     )
 
@@ -253,7 +349,9 @@ elif menu == "Produksi Kayu":
 
 elif menu == "Master Data":
 
-    st.title("📊 Master Data")
+    st.title(
+        "📊 Master Data"
+    )
 
     st.info(
         "Master data merupakan basis data yang digunakan dalam analisis ekonomi sumber daya hutan."
@@ -262,13 +360,14 @@ elif menu == "Master Data":
     st.dataframe(
         master_data,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=420
     )
 
     create_chart_from_table(
         master_data,
-        "variable",
-        "value",
+        "Variable",
+        "Value",
         "Grafik Master Data"
     )
 
@@ -278,12 +377,15 @@ elif menu == "Master Data":
 
 elif menu == "Parameter Simulasi":
 
-    st.title("⚙️ Parameter Simulasi")
+    st.title(
+        "⚙️ Parameter Simulasi"
+    )
 
     st.dataframe(
         parameter,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=420
     )
 
     create_chart_from_table(
@@ -299,12 +401,15 @@ elif menu == "Parameter Simulasi":
 
 elif menu == "Dashboard Summary":
 
-    st.title("📈 Dashboard Summary")
+    st.title(
+        "📈 Dashboard Summary"
+    )
 
     st.dataframe(
         dashboard,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=420
     )
 
     create_chart_from_table(
