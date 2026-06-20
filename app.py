@@ -26,19 +26,28 @@ st.markdown("""
 }
 
 [data-testid="stMetric"]{
-    background:#eef7f0;
-    border:1px solid #d6ead8;
-    border-radius:15px;
-    padding:15px;
+    border-radius:18px;
+    padding:18px;
+    border:1px solid rgba(120,120,120,0.20);
+    background:rgba(120,120,120,0.08);
 }
 
-h1{
-    color:#1B5E20;
+[data-testid="stMetricLabel"]{
+    font-size:1rem;
+    font-weight:600;
+}
+
+[data-testid="stMetricValue"]{
+    font-size:2.2rem;
     font-weight:700;
 }
 
-h2,h3{
-    color:#2E7D32;
+h1,h2,h3{
+    font-weight:700;
+}
+
+div[data-testid="stDataFrame"]{
+    border-radius:12px;
 }
 
 </style>
@@ -61,7 +70,15 @@ def clean_dataframe(df):
         ~df.columns.astype(str).str.contains("^Unnamed")
     ]
 
-    df = df.dropna(how="all")
+    df = df.dropna(
+        axis=0,
+        how="all"
+    )
+
+    df = df.dropna(
+        axis=1,
+        how="all"
+    )
 
     df.columns = [
         str(col)
@@ -70,7 +87,7 @@ def clean_dataframe(df):
         for col in df.columns
     ]
 
-    return df
+    return df.reset_index(drop=True)
 
 # =====================================================
 # LOAD EXCEL
@@ -165,15 +182,26 @@ def create_chart_from_table(
                 x=label_col,
                 y=value_col,
                 color=value_col,
+                color_continuous_scale="Blues",
                 text=value_col
             )
 
+            fig.update_traces(
+                textposition="outside"
+            )
+
             fig.update_layout(
-                height=500,
+                height=550,
                 showlegend=False,
                 xaxis_title="",
                 yaxis_title="",
-                template="plotly_white"
+                template="plotly",
+                margin=dict(
+                    l=20,
+                    r=20,
+                    t=40,
+                    b=40
+                )
             )
 
             st.plotly_chart(
@@ -182,6 +210,7 @@ def create_chart_from_table(
             )
 
     except:
+
         st.info(
             "Data grafik tidak tersedia."
         )
@@ -249,25 +278,25 @@ KELOMPOK 4
 
     c1, c2, c3, c4 = st.columns(4)
 
-    c1.metric(
-        "🌳 Profil Hutan",
-        len(profil_hutan)
-    )
+   c1.metric(
+    label="🌳 Profil Hutan",
+    value=len(profil_hutan)
+)
 
-    c2.metric(
-        "🪵 Produksi",
-        len(produksi_kayu)
-    )
+c2.metric(
+    label="🪵 Produksi",
+    value=len(produksi_kayu)
+)
 
-    c3.metric(
-        "📊 Master Data",
-        len(master_data)
-    )
+c3.metric(
+    label="📊 Master Data",
+    value=len(master_data)
+)
 
-    c4.metric(
-        "📈 Dashboard",
-        len(dashboard)
-    )
+c4.metric(
+    label="📈 Dashboard",
+    value=len(dashboard)
+)
 
     st.markdown("---")
 
