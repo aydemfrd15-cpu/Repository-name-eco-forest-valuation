@@ -346,17 +346,24 @@ elif menu == "Profil Hutan":
     )
 
     st.dataframe(
-    profil_hutan,
-    use_container_width=True,
-    hide_index=True,
-    height=table_height(profil_hutan)
-)
+        profil_hutan,
+        use_container_width=True,
+        hide_index=True,
+        height=table_height(profil_hutan)
+    )
 
-    st.dataframe(
-    profil_hutan,
-    use_container_width=True,
-    hide_index=True
-)
+    create_chart_from_table(
+        profil_hutan,
+        "Variable",
+        "Value",
+        "Grafik Profil Hutan"
+    )
+
+st.info("""
+Profil hutan menggambarkan karakteristik utama KPH Cepu sebagai kawasan hutan produksi jati.
+Data menunjukkan luas kawasan, jenis hutan, produksi kayu, serta estimasi nilai ekonomi hutan berdasarkan harga kayu jati dan volume produksi.
+Informasi ini menjadi dasar dalam analisis valuasi ekonomi sumber daya hutan.
+""")
 
 # =====================================================
 # PRODUKSI KAYU
@@ -381,6 +388,11 @@ elif menu == "Produksi Kayu":
         "Nilai",
         "Grafik Produksi Kayu"
     )
+
+st.info("""
+Data produksi kayu menunjukkan parameter yang digunakan untuk menilai manfaat ekonomi langsung dari hutan.
+Variabel seperti stok karbon, harga karbon, konservasi tanah, dan indeks keanekaragaman hayati digunakan sebagai dasar estimasi jasa ekosistem dan nilai ekonomi lingkungan.
+""")
 
 # =====================================================
 # MASTER DATA
@@ -410,6 +422,11 @@ elif menu == "Master Data":
         "Grafik Master Data"
     )
 
+st.info("""
+Master data merupakan basis seluruh perhitungan dalam aplikasi.
+Data ini mengintegrasikan informasi produksi kayu, nilai bruto hutan, margin usaha, jasa karbon, serta skenario pemanfaatan lahan yang digunakan dalam simulasi valuasi ekonomi.
+""")
+
 # =====================================================
 # PARAMETER SIMULASI
 # =====================================================
@@ -433,6 +450,11 @@ elif menu == "Parameter Simulasi":
         "Nilai Awal",
         "Grafik Parameter Simulasi"
     )
+
+st.info("""
+Parameter simulasi berisi asumsi dasar yang digunakan dalam proses perhitungan.
+Perubahan nilai pada parameter ini akan mempengaruhi hasil valuasi ekonomi hutan, jasa ekosistem karbon, dan analisis trade-off pemanfaatan lahan.
+""")
 
 # =====================================================
 # DASHBOARD SUMMARY
